@@ -9,10 +9,10 @@
   "license": "MIT",
   "repository": "JarvusInnovations/puppeteer-cli",
   "dependencies": {
-    "file-url": "^3.0.0",
+    "file-url": "^4.0.0",
     "is-url": "^1.2.4",
-    "puppeteer": "^2.0.0",
-    "url-parse": "^1.4.7",
-    "yargs": "^13.3.0"
+    "puppeteer": "^21.6.1",
+    "url-parse": "^1.5.10",
+    "yargs": "^17.7.2"
   }
 }
