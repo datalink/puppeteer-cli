@@ -195,7 +195,15 @@ function buildLaunchOptions({ sandbox }) {
         args.push('--no-sandbox', '--disable-setuid-sandbox');
     }
 
+    args.push(
+        '--disable-dev-shm-usage',
+        '--disable-gpu',
+        '--headless',
+        '--no-default-browser-check',
+    );
+
     return {
+        headless: 'new',
         args
     };
 }
