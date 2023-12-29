@@ -1,0 +1,47 @@
+{
+    "env": {
+        "browser": false,
+        "es6": true,
+        "node": true
+    },
+    "extends": [
+        "airbnb-base"
+    ],
+    "rules": {
+        // indentation
+        "indent": ["error", 4, {"SwitchCase": 1}],
+        "import/extensions": ["error", "never"],
+        "import/no-extraneous-dependencies": ["warn"],
+        "no-underscore-dangle": "off",
+
+        // removed functions from comma-dangle, as it gets in the way of
+        // splitting long lines with a single param such as an aray filter() callback
+        "comma-dangle": ["error", {
+            "arrays": "always-multiline",
+            "objects": "always-multiline",
+            "imports": "always-multiline",
+            "exports": "always-multiline",
+            "functions": "only-multiline"
+        }],
+
+        // prefer not using default exports so tree shaking can work
+        // good rules, but make them warnings
+        "no-undef": "warn",
+        // turned off this because at this stage in the project it's useful
+        "no-unused-vars": "off",
+        "object-curly-spacing": ["error", "never"],
+        "no-multiple-empty-lines": ["error", {"max": 1, "maxEOF": 0, "maxBOF": 0}],
+        // a little wider is fine - we're not on VT80s anymore
+        "max-len": ["off"],
+        // use double-quotes for consistency with JSX and PHP
+        "quotes": ["error", "double", "avoid-escape"],
+        // code arrangement doesn't matter as webpack fixes it all during compilation
+        "no-use-before-define": ["off"],
+        // this is a console app
+        "no-console": ["off"],
+        // make it meaningful
+        "prefer-const": "error",
+        // Makes defining types from props painful with typescript, so off it goes
+        "prefer-destructuring": "off"
+    }
+}
