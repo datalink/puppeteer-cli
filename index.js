@@ -7,18 +7,19 @@ import puppeteer from "puppeteer";
 import yargs from "yargs";
 import {hideBin} from "yargs/helpers";
 
-function buildLaunchOptions({sandbox}) {
+function buildLaunchOptions() {
     const args = [];
-
-    if (sandbox === false) {
-        args.push("--no-sandbox", "--disable-setuid-sandbox");
-    }
-
     args.push(
+        "--disable-setuid-sandbox",
+        "--no-sandbox",
         "--disable-dev-shm-usage",
         "--disable-gpu",
+        "--disable-site-isolation-trials",
         "--headless",
         "--no-default-browser-check",
+        "--no-first-run",
+        "--no-zygote",
+        "--single-process"
     );
 
     return {
