@@ -1,17 +1,27 @@
 # puppeteer-cli
 
-A command-line wrapper for generating PDF prints and PNG screenshots with [Puppeteer](https://developers.google.com/web/tools/puppeteer). Aims to be a easy replacement for the deprecated wkhtmltopdf.
+A command-line wrapper for generating PDF prints and PNG screenshots with [Puppeteer](https://developers.google.com/web/tools/puppeteer).
+
+## Changes from forked project
+
+This project has been forked from https://github.com/JarvusInnovations/puppeteer-cli, which had become unmaintained.
+
+Changes:
+
+- Updated dependencies
+- CLI is installed as `puppeteer-cli`, not `puppeteer`, so to not collide with Puppeteer's own CLI
+- AWS Lambda support with some additional chrome flags  
 
 ## Install
 
 ```bash
-npm install -g puppeteer-cli
+npm install -g git+https://datalink/puppeteer-cli.git
 ```
 
 ## Usage
 
 ```bash
-puppeteer print <url> [output]
+puppeteer-cli print <url> [output]
 
 Print an HTML file or URL to PDF
 
@@ -36,7 +46,7 @@ Options:
 ```
 
 ```bash
-puppeteer screenshot <url> [output]
+puppeteer-cli screenshot <url> [output]
 
 Take screenshot of an HTML file or URL to PNG
 
@@ -57,17 +67,13 @@ Options:
 
 ``` shell
 echo "<h1>Hello world!</h1>" > mypage.html
-puppeteer print mypage.html myprint.pdf # local file
-puppeteer print https://github.com/JarvusInnovations/puppeteer-cli puppeteer-cli.pdf # url
-puppeteer screenshot mypage.html myscreenshot.png # local file
-puppeteer screenshot https://jarv.us myscreenshot.png # url
-puppeteer screenshot https://jarv.us myscreenshot.png --viewport 300x200
+puppeteer-cli print mypage.html myprint.pdf # local file
+puppeteer-cli print https://github.com/JarvusInnovations/puppeteer-cli puppeteer-cli.pdf # url
+puppeteer-cli screenshot mypage.html myscreenshot.png # local file
+puppeteer-cli screenshot https://jarv.us myscreenshot.png # url
+puppeteer-cli screenshot https://jarv.us myscreenshot.png --viewport 300x200
 ```
 
-## Roadmap
+## Credits
 
-- [X] Add `print` command
-- [X] Add support for `http://` inputs in addition to local file paths
-- [X] Add `screenshot` command
-- [ ] Add compatibility with `wkhtmltopdf` parameters to provide a drop-in replacement?
-- [ ] Detect `.json` or `.js` files as input to `screenshot` command instead of a single HTML file or URL, specifying a set of screenshots to capture in series
+Thanks to https://github.com/JarvusInnovations/puppeteer-cli for the original project.
