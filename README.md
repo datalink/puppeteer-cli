@@ -10,12 +10,105 @@ Changes:
 
 - Updated dependencies
 - CLI is installed as `puppeteer-cli`, not `puppeteer`, so to not collide with Puppeteer's own CLI
-- AWS Lambda support with some additional chrome flags  
+- A strong focus on running under AWS Lambda via AL2  
+- README updates
 
 ## Install
 
 ```bash
-npm install -g git+https://datalink/puppeteer-cli.git
+npm install -g git+ssh://git@github.com/datalink/puppeteer-cli.git
+```
+
+## In Docker
+
+The main usage of this fork is to run within AWS Lambda via Docker.
+
+This Dockerfile has worked. It's based on AmazonLinux AL2. Pay close attention to the yum dependencies.
+
+```
+# starting from bref, which is based on provided.al2
+# e.g. https://hub.docker.com/_/amazonlinux/tags?page=1&name=2.0
+FROM bref/php-74
+
+# Install Bref stuff
+...
+
+# Install node 16 for Puppeteer
+# We can't go higher due to Amazon Linux 2's version of GCC, but bump this up once bref is based on AL2023+
+RUN yum -y update && \
+    yum install https://rpm.nodesource.com/pub_16.x/nodistro/repo/nodesource-release-nodistro-1.noarch.rpm -y && \
+    yum install nodejs -y --setopt=nodesource-nodejs.module_hotfixes=1 && \
+    yum clean all
+
+# Install puppeteer CLI dependencies
+# @see https://github.com/puppeteer/puppeteer/blob/main/docs/troubleshooting.md#chrome-headless-doesnt-launch
+# @see https://stackoverflow.com/questions/71096906/google-chrome-on-aws-lambda
+# @see https://github.com/puppeteer/puppeteer/issues/560#issuecomment-325245136
+RUN yum -y update && \
+    yum install -y \
+        alsa-lib \
+        alsa-lib.x86_64 \
+        at-spi2-atk \
+        atk \
+        atk.x86_64 \
+        cups-libs \
+        cups-libs.x86_64 \
+        gtk3 \
+        gtk3.x86_64 \
+        ipa-gothic-fonts \
+        libXScrnSaver \
+        libXScrnSaver.x86_64 \
+        libXcomposite \
+        libXcomposite.x86_64 \
+        libXcursor \
+        libXcursor.x86_64 \
+        libXdamage \
+        libXdamage.x86_64 \
+        libXext \
+        libXext.x86_64 \
+        libXi.x86_64 \
+        libXrandr \
+        libXrandr.x86_64 \
+        libXt \
+        libXtst \
+        libXtst.x86_64 \
+        libdrm \
+        pango \
+        pango.x86_64 \
+        shadow-utils \
+        xorg-x11-fonts-100dpi \
+        xorg-x11-fonts-75dpi \
+        xorg-x11-fonts-Type1 \
+        xorg-x11-fonts-cyrillic \
+        xorg-x11-fonts-misc \
+        xorg-x11-server-Xvfb \
+        xorg-x11-utils \
+        GConf2.x86_64 && \
+    yum install -y \
+        ipa-gothic-fonts  \
+        xorg-x11-fonts-100dpi \
+        xorg-x11-fonts-75dpi \
+        xorg-x11-fonts-Type1 \
+        xorg-x11-fonts-cyrillic \
+        xorg-x11-fonts-misc \
+        xorg-x11-utils && \
+    yum clean all
+
+# Install puppeteer and the latest Chrome
+ENV PUPPETEER_CACHE_DIR="/var/puppeteer"
+RUN mkdir -p /var/puppeteer && \
+    npm i -g puppeteer && \
+    puppeteer browsers install chrome@stable
+    
+# Now install puppeteer-cli, which provides a thin wrapper
+RUN yum update -y && \
+    yum install -y git && \
+    npm i -g git+ssh://git@github.com/datalink/puppeteer-cli.git && \
+    yum remove -y git && \
+    yum clean all
+
+...
+
 ```
 
 ## Usage
