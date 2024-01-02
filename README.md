@@ -8,9 +8,9 @@ This project has been forked from https://github.com/JarvusInnovations/puppeteer
 
 Changes:
 
-- Updated dependencies
-- CLI is installed as `puppeteer-cli`, not `puppeteer`, so to not collide with Puppeteer's own CLI
-- A strong focus on running under AWS Lambda via AL2  
+- Updated dependencies to latest maintained versions
+- CLI is now installed as `puppeteer-cli` (not `puppeteer`), so to not collide with Puppeteer's own CLI
+- This project focuses on running under AWS Lambda via AL2, and the `--headless` option is now always true, with additional flags hard-coded that best support AWS Lambda environments. 
 - README updates
 
 ## Install
@@ -121,7 +121,7 @@ Print an HTML file or URL to PDF
 Options:
   --version                Show version number                         [boolean]
   --help                   Show help                                   [boolean]
-  --sandbox                                            [boolean] [default: true]
+  --sandbox                Flag has no effect          [boolean] [default: true]
   --timeout                                            [number] [default: 30000]
   --wait-until                                        [string] [default: "load"]
   --cookie                 Set a cookie in the form "key:value". May be repeated
@@ -146,7 +146,7 @@ Take screenshot of an HTML file or URL to PNG
 Options:
   --version          Show version number                               [boolean]
   --help             Show help                                         [boolean]
-  --sandbox                                            [boolean] [default: true]
+  --sandbox          Flag has no effect                [boolean] [default: true]
   --timeout                                            [number] [default: 30000]
   --wait-until                                        [string] [default: "load"]
   --cookie           Set a cookie in the form "key:value". May be repeated for
