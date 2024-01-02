@@ -1,0 +1,21 @@
+# Automatically merges patch and minor dependabot PRs if they pass CI tests
+# https://github.com/fastify/github-action-merge-dependabot
+
+name: dependabot-auto-merge
+
+on:
+  - push
+  - pull_request
+
+jobs:
+  auto-merge:
+    # needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+      contents: write
+    steps:
+      - uses: fastify/github-action-merge-dependabot@v3
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          target: minor
