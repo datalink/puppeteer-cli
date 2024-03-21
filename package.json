@@ -12,7 +12,7 @@
   "dependencies": {
     "file-url": "^4.0.0",
     "is-url": "^1.2.4",
-    "puppeteer": "^21.6.1",
+    "puppeteer": "^22.6.0",
     "url-parse": "^1.5.10",
     "yargs": "^17.7.2"
   },
